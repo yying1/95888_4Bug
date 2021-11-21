@@ -36,7 +36,7 @@ def get_reviews(soup,all_reviews):
 
 #use a range loop to extract first 100 pages of review content, each page should have 10 reviews. Reviews from other countries will be ignored. It will auto-stop at the last page
 for x in range(1,101):
-    soup= get_soup(f"https://www.amazon.com/product-reviews/B00164QTY0/?ie=UTF8&reviewerType=all_reviews&pageNumber={x}",HEADERS)
+    soup= get_soup(f"https://www.amazon.com/product-reviews/B07JGL19WK/?ie=UTF8&reviewerType=all_reviews&pageNumber={x}",HEADERS)
     get_reviews(soup,all_reviews)
     if not soup.find("li",{'class':'a-disabled a-last'}):
         pass
