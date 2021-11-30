@@ -8,7 +8,7 @@ import requests
 API_KEY = "4db2a75e63df4a1fb66f380105e4589b"
 
 # search a list of sellers by product upc
-def searchById(upc):
+def search(upc, name):
 
     # include headers and api call params
     headers = {
@@ -28,7 +28,10 @@ def searchById(upc):
         data = json.loads(response.read())
         conn.close()
         
-        return clean_data(data["items"]["pricing"])
+        data = clean_data(data["items"]["pricing"])
+        if len(data) == 0:
+            return searchByName(name)
+        return data
     except Exception as e:
         print(e)
     
