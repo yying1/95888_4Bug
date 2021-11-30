@@ -28,7 +28,7 @@ def searchById(upc):
         data = json.loads(response.read())
         conn.close()
         
-        return data["items"]["pricing"]
+        return clean_data(data["items"]["pricing"])
     except Exception as e:
         print(e)
     
@@ -59,13 +59,13 @@ def searchByName(name):
         data = json.loads(response.read())
         conn.close()
         print(data)
-        return data["items"]["pricing"]
+        return clean_data(data["items"]["pricing"])
     except Exception as e:
         print(e)
     
     return ""
 
-# take in a list of dict repsents different sellers and return only the valid ones
+# take in a list of dict repsents different sellers and return only the valid ones in string format
 # Validate sellers data by checking if the product is in stock and if its a U.S. seller
 def clean_seller_data(sellers):
     clean_dta = list()
@@ -86,10 +86,14 @@ def clean_seller_data(sellers):
 
         clean_dta.append(seller)
 
-    return clean_dta
+    return to_string(clean_dta)
 
+# take in a list dict objects represents sellers and output a list of string
 def to_string(dta):
-    return f"{dta['website_name']} {dta['price']} {dta['link']}"
+    data_str = list()
+    for d in dta:
+        data_str.append(f"{dta['title']}\nFrom: {dta['seller']}\nURL: {dta['link']}\nPrice: {dta['price']}")
+    return data_str
 
         
 def main():
