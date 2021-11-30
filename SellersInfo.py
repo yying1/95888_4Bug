@@ -66,6 +66,7 @@ def searchByName(name):
     return ""
 
 # take in a list of dict repsents different sellers and return only the valid ones
+# Validate sellers data by checking if the product is in stock and if its a U.S. seller
 def clean_seller_data(sellers):
     clean_dta = list()
     for seller in sellers:
@@ -74,39 +75,28 @@ def clean_seller_data(sellers):
         page = requests.get(seller["link"])
         soup = bs(page.text, "html.parser")
 
-        price = "{:,.2f}".format(seller["price"])
         count = 0
         for r in soup.find_all("p") + soup.find_all("div"):
             if "$" in r.getText():
                 count += 1
+                break;
 
         if count == 0:
             continue
-        
-        """
-        if (len(soup(text="not found")) > 0 or len(soup(text="404")) > 0 or len(soup(text="not be found")) or  len(soup(text="PROBLEM")) > 0
-            or len(soup(text="find the page")) or len(soup(text="no longer"))) > 0:
-            continue
-        """
 
         clean_dta.append(seller)
 
     return clean_dta
 
-
+def to_string(dta):
+    return f"{dta['website_name']} {dta['price']} {dta['link']}"
 
         
 def main():
-    data = searchById("194252165959")
+    data = searchById("194252590362")
 
     for d in clean_seller_data(data):
         print(d)
-
-    """
-    data = searchByName("Fire TV Stick with Alexa Voice Remote (includes TV controls), HD streaming device")
-    for d in data:
-        print(d)
-    """
 
 if __name__ == "__main__":
     main()
