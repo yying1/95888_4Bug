@@ -28,7 +28,7 @@ def search(upc, name):
         data = json.loads(response.read())
         conn.close()
         
-        data = clean_data(data["items"]["pricing"])
+        data = clean_seller_data(data["items"]["pricing"])
         if len(data) == 0:
             return searchByName(name)
         return data
@@ -62,7 +62,7 @@ def searchByName(name):
         data = json.loads(response.read())
         conn.close()
         print(data)
-        return clean_data(data["items"]["pricing"])
+        return clean_seller_data(data["items"]["pricing"])
     except Exception as e:
         print(e)
     
@@ -95,12 +95,12 @@ def clean_seller_data(sellers):
 def to_string(dta):
     data_str = list()
     for d in dta:
-        data_str.append(f"{dta['title']}\nFrom: {dta['seller']}\nURL: {dta['link']}\nPrice: {dta['price']}")
+        data_str.append(f"{d['title']}\nFrom: {d['seller']}\nURL: {d['link']}\nPrice: {d['price']}")
     return data_str
 
         
 def main():
-    data = searchById("194252590362")
+    data = search("194252590362")
 
     for d in clean_seller_data(data):
         print(d)

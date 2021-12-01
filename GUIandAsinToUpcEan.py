@@ -14,6 +14,9 @@ import re
 import requests, json
 from requests.structures import CaseInsensitiveDict
 import http.client, urllib.request, urllib.parse, urllib.error, base64
+from ReviewDataCleaning import review_cleaning
+from SellersInfo import search
+from CheckAmazonReview import get_name
 
 class MainWindow:
     def __init__(self, win):
@@ -143,12 +146,15 @@ class MainWindow:
         upc = jsonResponse['data'][0]['attributes']['upc']
         ean = jsonResponse['data'][0]['attributes']['ean']
         
-        print("upc: " + upc)
-        print("ean: " + ean)
-        
         return upc, ean
 
-        #sIFe5XuTMF3k3gCYNx3iQvYd11r79oBmqkMUJ8Jba5qHocDYa61FAduCNYu0        
+    # get review in string format for the product
+    def stringify(self, asin):
+        upc, ean = getAPI(asin)
+        name = get_name(asin)
+        return search(upc, name), review_cleaning(asin)
+
+    #sIFe5XuTMF3k3gCYNx3iQvYd11r79oBmqkMUJ8Jba5qHocDYa61FAduCNYu0        
 
 window = Tk()
 myWindow = MainWindow(window)

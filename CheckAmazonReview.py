@@ -2,6 +2,9 @@
 # coding: utf-8
 #Name: Frank Yue Ying
 #Date: 2021-11-30
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
 
 ## Note: this script extracts US customer reviews from the ASIN's review page on Amazon.Input is the URL string. Replace "B07JGL19WK" with the target ASIN. A Excel file named "AmazonReviewResult" will aslo be produced at the end.
 
@@ -44,6 +47,8 @@ def main_checkAmazonReview(ASIN = "B07PXGQC1Q"):
 
     df = pd.DataFrame(all_reviews)
     df.to_excel("AmazonReviewResult.xlsx",index = False)
+
+    return df
     #print(len(all_reviews))
     #print("------Review Titles:")
     #print(*[x['title'] for x in all_reviews],sep = "\n")
@@ -56,8 +61,5 @@ def get_name(ASIN = "B07PXGQC1Q"):
     return name
 
 if __name__ == "__main__":
-    import requests
-    from bs4 import BeautifulSoup
-    import pandas as pd
     main_checkAmazonReview()
     print( get_name())

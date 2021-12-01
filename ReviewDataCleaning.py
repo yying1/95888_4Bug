@@ -3,11 +3,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from CheckAmazonReview import main_checkAmazonReview
 
 ### Read the Amazon Review Result
-def review_cleaning():
-	Data = pd.read_excel("AmazonReviewResult.xlsx", header = 0)
-	AZ = pd.DataFrame(Data)
+def review_cleaning(ASIN = "B07PXGQC1Q"):
+	AZ = main_checkAmazonReview(ASIN)
 	AZ.dropna(how='all', inplace=True)
 
 	### View the Rating Column
@@ -29,13 +29,6 @@ def review_cleaning():
 	AZ['rating'] = AZ['rating'].replace(['1.0', '2.0', '3.0', '4.0', '5.0'], ['Hate', 'Do Not Like', 'Okay', 'Like', 'Love'])
 
 	## Do the categorical variables in Count plot
-
-	'''
-	plt.figure(figsize=(8,4))
-	fig = plt.figure()
-	sns.countplot(x = 'rating', data = AZ)
-	fig.savefig('Rating.jpg')
-	'''
 
 	TS = pd.read_csv("terms.csv", header = 0, names = ['Terms'])
 
@@ -72,20 +65,6 @@ def review_cleaning():
 		review_strs.append(rev_str)
 
 	return review_strs
-
-	'''
-	plt.figure(figsize=(20,10))
-	fig = plt.figure()
-
-	ax= sns.countplot(x = 'Matched Count', data= TS)
-
-	ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right", fontsize = 10)
-	plt.xlabel("Match", fontsize=15)
-	plt.ylabel("Count", fontsize=15)
-	plt.tight_layout()
-	plt.show()
-	fig.savefig('Match.jpg')
-	'''
 
 def main():
 	for i in review_cleaning():
