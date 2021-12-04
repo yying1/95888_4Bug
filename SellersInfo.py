@@ -5,7 +5,7 @@ import http.client, urllib.request, urllib.parse, urllib.error, json
 from bs4 import BeautifulSoup as bs
 import requests
 
-API_KEY = "4db2a75e63df4a1fb66f380105e4589b"
+API_KEY = "13807ba1f50844a3837e5512ac00d8ba"
 
 # search a list of sellers by product upc
 def search(upc, name):
