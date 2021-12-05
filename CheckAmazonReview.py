@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 #Name: Frank Yue Ying
-#Date: 2021-11-30
+#Date: 2021-12-04
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -36,8 +36,8 @@ def main_checkAmazonReview(ASIN = "B07PXGQC1Q"):
 
     #List variable all_reviews will keep all of the reviews scraped for the product (including all pages)
     all_reviews= []
-    #use a range loop to extract first 100 pages of review content, each page should have 10 reviews. Reviews from other countries will be ignored. It will auto-stop at the last page
-    for x in range(1,101):
+    #use a range loop to extract first 10 pages of review content, each page should have 10 reviews. Reviews from other countries will be ignored. It will auto-stop at the last page
+    for x in range(1,11):
         soup= get_soup(f"https://www.amazon.com/product-reviews/{ASIN}/?ie=UTF8&reviewerType=all_reviews&pageNumber={x}",HEADERS)
         get_reviews(soup,all_reviews)
         if not soup.find("li",{'class':'a-disabled a-last'}):
@@ -49,9 +49,6 @@ def main_checkAmazonReview(ASIN = "B07PXGQC1Q"):
     df.to_excel("AmazonReviewResult.xlsx",index = False)
 
     return df
-    #print(len(all_reviews))
-    #print("------Review Titles:")
-    #print(*[x['title'] for x in all_reviews],sep = "\n")
 
 #Function to get ASIN name
 def get_name(ASIN = "B07PXGQC1Q"):

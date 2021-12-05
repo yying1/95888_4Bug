@@ -5,7 +5,8 @@ import http.client, urllib.request, urllib.parse, urllib.error, json
 from bs4 import BeautifulSoup as bs
 import requests
 
-API_KEY = "13807ba1f50844a3837e5512ac00d8ba"
+# API keys for the following api calls
+API_KEY = "f946662395f94c73ac066c940f8fe796"
 
 # search a list of sellers by product upc
 def search(upc, name):
@@ -32,7 +33,7 @@ def search(upc, name):
         try:
             data = clean_seller_data(data["items"]["pricing"])
             return data
-        except:
+        except Exception as e:
             return searchByName(name)
             
     except Exception as e:
@@ -64,7 +65,6 @@ def searchByName(name):
         response = conn.getresponse()
         data = json.loads(response.read())
         conn.close()
-        print(data)
         return clean_seller_data(data["items"]["pricing"])
     except Exception as e:
         print(e)
@@ -76,6 +76,10 @@ def searchByName(name):
 def clean_seller_data(sellers):
     clean_dta = list()
     for seller in sellers:
+        # Game Stop does not have 404 page but does not allow scrapping
+        if "GameStop" in seller["seller"]:
+            clean_dta.append(seller)
+            continue
         if "ca" in seller["seller"] or "CAD" in seller["currency"] or "CAD" in seller["shipping"] or "GBP" in seller["currency"]:
             continue
         page = requests.get(seller["link"])
