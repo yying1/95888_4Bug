@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 
 # API keys for the following api calls
-API_KEY = "f946662395f94c73ac066c940f8fe796"
+API_KEY = "53a30d3dcd184f509dc7d37f91bf71d6"
 
 # search a list of sellers by product upc
 def search(upc, name):
