@@ -152,7 +152,17 @@ class MainWindow:
     def stringify(self, asin):
         upc, ean = getAPI(asin)
         name = get_name(asin)
-        return search(upc, name), review_cleaning(asin)
+
+        sellers = ""
+        reviews = ""
+
+        for s in search(upc, name):
+            sellers += s + "\n\n"
+
+        for r in review_cleaning(asin):
+            reviews += r + "\n\n"
+
+        return sellers, reviews
 
     #sIFe5XuTMF3k3gCYNx3iQvYd11r79oBmqkMUJ8Jba5qHocDYa61FAduCNYu0        
 

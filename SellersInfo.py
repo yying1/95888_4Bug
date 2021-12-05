@@ -28,10 +28,13 @@ def search(upc, name):
         data = json.loads(response.read())
         conn.close()
         
-        data = clean_seller_data(data["items"]["pricing"])
-        if len(data) == 0:
+        # handle empty upc or empty results
+        try:
+            data = clean_seller_data(data["items"]["pricing"])
+            return data
+        except:
             return searchByName(name)
-        return data
+            
     except Exception as e:
         print(e)
     

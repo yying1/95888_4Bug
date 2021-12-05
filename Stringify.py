@@ -14,8 +14,20 @@ from CheckAmazonReview import get_name
 def stringify(asin):
     upc, ean = getAPI(asin)
     name = get_name(asin)
-    print(name)
-    return search(upc, name), review_cleaning(asin)
+
+    sellers = ""
+    reviews = ""
+
+    for s in search(upc, name):
+        sellers += s + "\n\n"
+
+    for r in review_cleaning(asin):
+        reviews += r + "\n\n"
+
+    sellers.rstrip()
+    reviews.rstrip()
+
+    return sellers, reviews
 
 def getAPI(asin):
     url = "https://v3.synccentric.com/api/v3/products/search"
@@ -39,13 +51,11 @@ def getAPI(asin):
 
 def main():
 	sellers, reviews = stringify("B08N5KWB9H")
-	for s in sellers:
-		print(s)
+	print(sellers)
 
 	print("=====================================================")
 
-	for r in reviews:
-		print(r)
+	
 
 if __name__ == "__main__":
 	main()

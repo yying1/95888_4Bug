@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 from CheckAmazonReview import main_checkAmazonReview
 
 ### Read the Amazon Review Result
@@ -11,8 +9,11 @@ def review_cleaning(ASIN = "B07PXGQC1Q"):
 	AZ.dropna(how='all', inplace=True)
 
 	### View the Rating Column
-	AZ['rating']
-	AZ['rating'] = AZ['rating'].str.replace(' out of 5 stars', '')
+	# handle empty reviews
+	try:
+		AZ['rating'] = AZ['rating'].str.replace(' out of 5 stars', '')
+	except:
+		return ""
 
 	#### Change each rating score to categorical name
 
@@ -29,7 +30,6 @@ def review_cleaning(ASIN = "B07PXGQC1Q"):
 	AZ['rating'] = AZ['rating'].replace(['1.0', '2.0', '3.0', '4.0', '5.0'], ['Hate', 'Do Not Like', 'Okay', 'Like', 'Love'])
 
 	## Do the categorical variables in Count plot
-
 	TS = pd.read_csv("terms.csv", header = 0, names = ['Terms'])
 
 	# Change all to lower case and turn to list for iteration
