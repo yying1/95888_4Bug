@@ -98,9 +98,6 @@ class MainWindow:
 
         for r in review_cleaning(asin):
             reviews += r + "\n\n"
-
-        print(sellers)
-        print(reviews)
         
         self.recommends.delete('1.0', 'end')
         self.recommends.insert('end', sellers)
