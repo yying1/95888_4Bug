@@ -95,7 +95,7 @@ class MainWindow:
 
         sellers_data = search(upc, name)
         reviews_data = review_cleaning(asin)
-
+        
         if len(sellers_data) == 0:
             for s in sellers_data:
                 sellers += s + "\n\n"
