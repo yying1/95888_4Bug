@@ -76,16 +76,19 @@ class MainWindow:
         resp = requests.post(url, headers=headers, data=data)
         
         jsonResponse = resp.json()
-        upc = jsonResponse['data'][0]['attributes']['upc']
-        ean = jsonResponse['data'][0]['attributes']['ean']
+        if "errors" in jsonResponse:
+            self.message.config(text = "No UPC for this product")
+            upc = ""
+            ean = ""
+        else:
+            upc = jsonResponse['data'][0]['attributes']['upc']
+            ean = jsonResponse['data'][0]['attributes']['ean']
         
         return upc, ean
 
     # Get sellers and reviews information in string format for final output
     def stringify(self, asin):
         upc, ean = self.getAPI(asin)
-        print(upc)
-        print(ean)
         name = get_name(asin)
 
         sellers = ""
