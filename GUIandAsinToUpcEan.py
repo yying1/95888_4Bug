@@ -77,7 +77,6 @@ class MainWindow:
         
         jsonResponse = resp.json()
         if "errors" in jsonResponse:
-            self.message.config(text = "No UPC for this product")
             upc = ""
             ean = ""
         else:
