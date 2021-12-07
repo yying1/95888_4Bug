@@ -90,14 +90,19 @@ class MainWindow:
         upc, ean = self.getAPI(asin)
         name = get_name(asin)
 
-        sellers = ""
-        reviews = ""
+        sellers = "No Alternative Sellers Available"
+        reviews = "No Reviews Available Online"
 
-        for s in search(upc, name):
-            sellers += s + "\n\n"
+        sellers_data = search(upc, name)
+        reviews_data = review_cleaning(asin)
 
-        for r in review_cleaning(asin):
-            reviews += r + "\n\n"
+        if len(sellers_data) == 0:
+            for s in sellers_data:
+                sellers += s + "\n\n"
+
+        if len(reviews_data) == 0:
+            for r in reviews_data:
+                reviews += r + "\n\n"
 
         print(sellers)
         print(reviews)
