@@ -85,24 +85,28 @@ class MainWindow:
         
         return upc, ean
 
-    # Get sellers and reviews information in string format for final output
+    # Get sellers and reviews information in string format for final output.Return No data available string if there no seller or review data collected
     def stringify(self, asin):
         upc, ean = self.getAPI(asin)
         name = get_name(asin)
 
-        sellers = "No Alternative Sellers Available"
-        reviews = "No Reviews Available Online"
-
+        sellers = ""
+        reviews = ""
+        
         sellers_data = search(upc, name)
         reviews_data = review_cleaning(asin)
         
         if not len(sellers_data) == 0:
             for s in sellers_data:
                 sellers += s + "\n\n"
+        else:
+            sellers = "No Alternative Sellers Available"
 
         if not len(reviews_data) == 0:
             for r in reviews_data:
                 reviews += r + "\n\n"
+        else:
+            reviews = "No Reviews Available Online"
         
         self.recommends.delete('1.0', 'end')
         self.recommends.insert('end', sellers)
