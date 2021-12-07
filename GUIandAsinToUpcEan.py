@@ -103,9 +103,6 @@ class MainWindow:
         if len(reviews_data) == 0:
             for r in reviews_data:
                 reviews += r + "\n\n"
-
-        print(sellers)
-        print(reviews)
         
         self.recommends.delete('1.0', 'end')
         self.recommends.insert('end', sellers)
